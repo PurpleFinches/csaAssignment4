@@ -12,7 +12,7 @@
 
     li $v0, 5
     syscall
-    move $v0, $t0
+    move $t0, $v0
 
     li $v0, 11
     li $a0, '\n'
@@ -23,7 +23,6 @@
     syscall
 
 guessLoop:
-    beq $t0, $t1, correctGuess
     li $v0, 11
     li $a0, '\n'
     syscall
@@ -34,17 +33,19 @@ guessLoop:
 
     li $v0, 5
     syscall
-    move $v0, $t1
+    move $t1, $v0
+    
+    beq $t0, $t1, correctGuess
 
 incorrectGuess:
-    li $v0, 5
+    li $v0, 4
     la $a0, gaPrompt
     syscall
 
     j guessLoop
 
 correctGuess:
-    li $v0, 5
+    li $v0, 4
     la $a0, winPrompt
     syscall
 
