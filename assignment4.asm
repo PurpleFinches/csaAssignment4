@@ -6,3 +6,47 @@
     winPrompt:  .asciiz     "YOU WIN!"
 
 .text
+    li $v0, 4
+    la $a0, prompt1
+    syscall
+
+    li $v0, 5
+    syscall
+    move $v0, $t0
+
+    li $v0, 11
+    li $a0, '\n'
+    syscall
+
+    li $v0, 4
+    la $a0, prompt2
+    syscall
+
+guessLoop:
+    beq $t0, $t1, correctGuess
+    li $v0, 11
+    li $a0, '\n'
+    syscall
+
+    li $v0, 4
+    la $a0, prompt3
+    syscall
+
+    li $v0, 5
+    syscall
+    move $v0, $t1
+
+incorrectGuess:
+    li $v0, 5
+    la $a0, gaPrompt
+    syscall
+
+    j guessLoop
+
+correctGuess:
+    li $v0, 5
+    la $a0, winPrompt
+    syscall
+
+    li $v0, 10
+    syscall
